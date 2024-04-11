@@ -21,15 +21,19 @@ def dungeonAndDragons():
             
         def fireball(self):
             print("Fähigkeit Feuerball")
+            print("")
             
         def magicMissile(self):
             print("Fähigkeit magic Missile")
+            print("")
             
         def mirrorImage(self):
             print("Fähigkeit Spiegelbild")
+            print("")
             
         def smallHealthpotion(self):
             print("Fähigkeit kleine Heilung")
+            print("")
 
     #Subklasse Krieger
     class knight(character):
@@ -38,12 +42,15 @@ def dungeonAndDragons():
             
         def swordstrike(self):
             print("Fähigkeit Schwertschlag")
+            print("")
             
         def shieldblock(self):
             print("Fähigkeit Schildblock")
+            print("")
             
         def healthpotionKnight(self):
             print("Fähigkeit Heilung")
+            print("")
     
     #Subklasse Schurke
     class villain(character):
@@ -52,15 +59,19 @@ def dungeonAndDragons():
             
         def sneakAttack(self):
             print("Fähigkeit Sneack-Attack")
+            print("")
             
         def dagger(self):
             print("Fähigkeit Dolchangriff")
+            print("")
             
         def dirtInEye(self):
             print("Fähigkeit Schmutz")
+            print("")
             
         def healthpotionVillain(self):
             print("Fähigkeit healthpotion")
+            print("")
     
     #Nutzer die Charakterauswahl abfragen
     while (True):
@@ -147,11 +158,11 @@ def dungeonAndDragons():
     p1NextMove = False
     p2NextMove = False
     while(True):
-        #Erste Runde
-        if (p1FirstMove == True):
+        if (p1FirstMove == True or p1NextMove == True):
             p2NextMove = True
+            p1NextMove = False
             p1FirstMove = False
-            print(p1.name+", du bist als erstes am Zug!")
+            print(p1.name+", du bist am Zug!")
 
             while(True):
                 if (p1.name == "Krieger"):
@@ -203,10 +214,11 @@ def dungeonAndDragons():
                     else:
                         print(str(input2P1) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
-        elif (p2FirstMove == True):
+        elif (p2FirstMove == True or p2NextMove == True):
             p1NextMove = True
+            p2NextMove = False
             p2FirstMove = False
-            print(p2.name+",du bist als erstes am Zug!")
+            print(p2.name+",du bist am Zug!")
             while(True):
                 if (p2.name == "Krieger"):
                     input2P2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
@@ -258,20 +270,6 @@ def dungeonAndDragons():
                         print(str(input2P2) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
         
-        #Restlichen Runden
-        if (p1NextMove == True):
-                print(p1.name)
-                p1NextMove = False
-                p2NextMove = True
-                #Code hier einfügen
-        elif (p2NextMove == True):
-                print(p2.name)
-                p1NextMove = True
-                p2NextMove = False
-                #Code hier einfügen
-
-        
-        p1.hp = 0
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner,der " + p1.name + " ,ist gestorben!")
             break
