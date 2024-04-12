@@ -99,9 +99,16 @@ def dungeonAndDragons():
             print("Fähigkeit Schmutz")
             print("")
             
-        def healthpotionVillain(self):
-            print("Fähigkeit healthpotion")
-            print("")
+        def healthpotionVillain(self, hp, enemy):
+            heal = random.randint(1,6)
+            newHp = hp + heal
+            if (enemy.counterHealthpotions == 0):
+                print("Deine HP wurden um " + str(heal) + " HP auf insgesamt " + str(newHp) + " HP erhöht!")
+                print("")
+            elif (enemy.counterHealthpotions != 0):
+                print("Du hast die letzte Healthpotion aufgebraucht!")
+                print("")
+            return newHp
     
     #Nutzer die Charakterauswahl abfragen
     while (True):
@@ -245,7 +252,9 @@ def dungeonAndDragons():
                         p1.dirtInEye()
                         break
                     elif (input2P1 == 4):
-                        p1.healthpotionVillain()
+                        returnValue = p1.healthpotionVillain(p1.hp, p1)
+                        p1.hp = returnValue
+                        p1.counterHealthpotions = 1
                         break
                     else:
                         print(str(input2P1) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
@@ -287,7 +296,7 @@ def dungeonAndDragons():
                         p2.mirrorImage()
                         break
                     elif (input2P2 == 4):
-                        p2.smallHealthpotion(p2.hp, p2)
+                        returnValue = p2.smallHealthpotion(p2.hp, p2)
                         p2.hp = returnValue
                         p2.counterHealthpotions = 1
                         break
@@ -306,7 +315,9 @@ def dungeonAndDragons():
                         p2.dirtInEye()
                         break
                     elif (input2P2 == 4):
-                        p2.healthpotionVillain()
+                        returnValue = p2.healthpotionVillain(p2.hp, p2)
+                        p2.hp = returnValue
+                        p2.counterHealthpotions = 1
                         break
                     else:
                         print(str(input2P2) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
