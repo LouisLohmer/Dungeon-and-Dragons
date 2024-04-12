@@ -100,9 +100,18 @@ def dungeonAndDragons():
         def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
             super().__init__(hp, initiative, name, counterHealthpotions)
             
-        def sneakAttack(self):
-            print("Fähigkeit Sneack-Attack")
-            print("")
+        def sneakAttack(self, firstMove):
+            if (firstMove == True):
+                extraDamage = random.randint(1,3)
+                print("Dein nächster Angriff wird um " + str(extraDamage) + " Schaden erhöht!")
+                print("")
+                return (extraDamage, firstMove)
+            else:
+                print("Der erste Zug gehört nicht dir, es folgt kein extra Schaden!")
+                print("")
+                extraDamage = 0
+                return (extraDamage, firstMove)
+
             
         def dagger(self, enemyHP, enemyName):
             damageFirstAttack = random.randint(1,4)
@@ -216,11 +225,11 @@ def dungeonAndDragons():
     #Kampf iterativ abspielen, bis einer der Spieler tot ist
     p1NextMove = False
     p2NextMove = False
+    tupel = (0, False)
     while(True):
         if (p1FirstMove == True or p1NextMove == True):
             p2NextMove = True
             p1NextMove = False
-            p1FirstMove = False
             print(p1.name+", du bist am Zug!")
             print("HP: " + str(p1.hp))
 
@@ -269,14 +278,25 @@ def dungeonAndDragons():
                 elif (p1.name == "Schurke"):
                     input2P1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
                     if (input2P1 == 1):
-                        p1.sneakAttack()
+                        tupel = p1.sneakAttack(p1FirstMove)
                         break
                     elif (input2P1 == 2):
                         newEnemyHp = p1.dagger(p2.hp, p2.name)
-                        p2.hp = newEnemyHp
+                        if (tupel[1]):
+                            print("Dein Gegner bekommt " + str(tupel[0]) + " HP extra Schaden aufgrund der Sneak-Attack")
+                            print("")
+                            p2.hp = newEnemyHp - tupel[0]
+                        else:
+                            p2.hp = newEnemyHp
                         break
                     elif (input2P1 == 3):
                         p1.dirtInEye()
+                        if (tupel[1]):
+                            #Code hier
+                            pass
+                        else:
+                            #Code hier
+                            pass
                         break
                     elif (input2P1 == 4):
                         newHp = p1.healthpotionVillain(p1.hp, p1)
@@ -286,10 +306,10 @@ def dungeonAndDragons():
                     else:
                         print(str(input2P1) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
+            p1FirstMove = False
         elif (p2FirstMove == True or p2NextMove == True):
             p1NextMove = True
             p2NextMove = False
-            p2FirstMove = False
             print(p2.name+",du bist am Zug!")
             print("HP: " + str(p2.hp))
 
@@ -338,14 +358,25 @@ def dungeonAndDragons():
                 elif (p2.name == "Schurke"):
                     input2P2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
                     if (input2P2 == 1):
-                        p2.sneakAttack()
+                        tupel = p2.sneakAttack(p2FirstMove)
                         break
                     elif (input2P2 == 2):
                         newEnemyHp = p2.dagger(p1.hp, p1.name)
-                        p1.hp = newEnemyHp
+                        if (tupel[1]):
+                            print("Dein Gegner bekommt " + str(tupel[0]) + " HP extra Schaden aufgrund der Sneak-Attack")
+                            print("")
+                            p1.hp = newEnemyHp - tupel[0]
+                        else:
+                            p1.hp = newEnemyHp
                         break
                     elif (input2P2 == 3):
                         p2.dirtInEye()
+                        if (tupel[1]):
+                            #Code hier
+                            pass
+                        else:
+                            #Code hier
+                            pass
                         break
                     elif (input2P2 == 4):
                         newHp = p2.healthpotionVillain(p2.hp, p2)
@@ -355,6 +386,7 @@ def dungeonAndDragons():
                     else:
                         print(str(input2P2) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
+            p2FirstMove = False
         
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner,der " + p1.name + " ,ist gestorben!")
