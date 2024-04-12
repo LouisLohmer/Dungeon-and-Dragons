@@ -17,12 +17,25 @@ def dungeonAndDragons():
     
     #Subklasse Magier
     class mage(character):
-        def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
+        def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int, counterFireball: int) -> None:
             super().__init__(hp, initiative, name, counterHealthpotions)
+            self.counterFireball = counterFireball
             
-        def fireball(self):
-            print("Fähigkeit Feuerball")
-            print("")
+        def fireball(self,enemyHp, enemyName, player):
+            if (player.counterFireball % 2 == 0 or player.counterFireball == 0):
+                print("Der Feuerball lädt auf!")
+                print("")
+            elif (player.counterFireball % 2 != 0):
+                damageFirstAttack = random.randint(1,7)
+                damageSecondAttack = random.randint(1,7)
+                newEnemyHp = enemyHp - (damageFirstAttack + damageSecondAttack)
+                if (newEnemyHp > 0):
+                    print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                    print("")
+                elif (newEnemyHp <= 0):
+                    print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. 0 HP übrig!")
+                    print("")
+                return newEnemyHp
             
         def magicMissile(self, enemyHp, enemyName):
             damage = random.randint(1,6)
@@ -40,13 +53,13 @@ def dungeonAndDragons():
             print("Fähigkeit Spiegelbild")
             print("")
             
-        def smallHealthpotion(self, hp, enemy):
+        def smallHealthpotion(self, hp, player):
             heal = random.randint(1,4)
             newHp = hp + heal
-            if (enemy.counterHealthpotions == 0):
+            if (player.counterHealthpotions == 0):
                 print("Deine HP wurden um " + str(heal) + " HP auf insgesamt " + str(newHp) + " HP erhöht!")
                 print("")
-            elif (enemy.counterHealthpotions != 0):
+            elif (player.counterHealthpotions != 0):
                 print("Du hast die letzte Healthpotion aufgebraucht!")
                 print("")
             return newHp
@@ -71,13 +84,13 @@ def dungeonAndDragons():
             print("Fähigkeit Schildblock")
             print("")
         
-        def healthpotionKnight(self, hp, enemy):
+        def healthpotionKnight(self, hp, player):
             heal = random.randint(1,6)
             newHp = hp + heal
-            if (enemy.counterHealthpotions == 0):
+            if (player.counterHealthpotions == 0):
                 print("Deine HP wurden um " + str(heal) + " HP auf insgesamt " + str(newHp) + " HP erhöht!")
                 print("")
-            elif (enemy.counterHealthpotions != 0):
+            elif (player.counterHealthpotions != 0):
                 print("Du hast die letzte Healthpotion aufgebraucht!")
                 print("")
             return newHp
@@ -108,13 +121,13 @@ def dungeonAndDragons():
             print("Fähigkeit Schmutz")
             print("")
             
-        def healthpotionVillain(self, hp, enemy):
+        def healthpotionVillain(self, hp, player):
             heal = random.randint(1,6)
             newHp = hp + heal
-            if (enemy.counterHealthpotions == 0):
+            if (player.counterHealthpotions == 0):
                 print("Deine HP wurden um " + str(heal) + " HP auf insgesamt " + str(newHp) + " HP erhöht!")
                 print("")
-            elif (enemy.counterHealthpotions != 0):
+            elif (player.counterHealthpotions != 0):
                 print("Du hast die letzte Healthpotion aufgebraucht!")
                 print("")
             return newHp
@@ -126,7 +139,7 @@ def dungeonAndDragons():
         if (inputP1.lower() == "magier"):
             p1Hp = random.randint(1,6) + 10
             p1Initiative = random.randint(1,6)
-            p1 = mage(p1Hp, p1Initiative, "Magier", 0)
+            p1 = mage(p1Hp, p1Initiative, "Magier", 0, 0)
             print("Magier:")
             print("HP",p1.hp)
             print("Initiative",p1.initiative)
@@ -160,7 +173,7 @@ def dungeonAndDragons():
         if (inputP2.lower() == "magier"):
             p2Hp = random.randint(1,6) + 10
             p2Initiative = random.randint(1,6)
-            p2 = mage(p2Hp, p2Initiative, "Magier", 0)
+            p2 = mage(p2Hp, p2Initiative, "Magier", 0, 0)
             print("Magier:")
             print("HP",p2.hp)
             print("Initiative",p2.initiative)
@@ -232,7 +245,10 @@ def dungeonAndDragons():
                 elif (p1.name == "Magier"):
                     input2P1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
                     if (input2P1 == 1):
-                        p1.fireball()
+                        returnValue = p1.fireball(p2.hp, p2.name, p1)
+                        if (p1.counterFireball % 2 != 0):
+                            p2.hp = returnValue
+                        p1.counterFireball += 1
                         break
                     elif (input2P1 == 2):
                         returnValue = p1.magicMissile(p2.hp, p2.name)
@@ -296,7 +312,10 @@ def dungeonAndDragons():
                 elif (p2.name == "Magier"):
                     input2P2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
                     if (input2P2 == 1):
-                        p2.fireball()
+                        returnValue = p2.fireball(p1.hp, p1.name, p2)
+                        if (p2.counterFireball % 2 != 0):
+                            p1.hp = returnValue
+                        p2.counterFireball += 1
                         break
                     elif (input2P2 == 2):
                         returnValue = p2.magicMissile(p1.hp, p1.name)
