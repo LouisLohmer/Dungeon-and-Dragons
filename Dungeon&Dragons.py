@@ -24,9 +24,17 @@ def dungeonAndDragons():
             print("Fähigkeit Feuerball")
             print("")
             
-        def magicMissile(self):
-            print("Fähigkeit magic Missile")
-            print("")
+        def magicMissile(self, enemyHp, enemyName):
+            damage = random.randint(1,6)
+            newEnemyHp = enemyHp - damage
+            if (newEnemyHp > 0):
+                print("Der " + str(enemyName) + " hat " + str(damage) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                print("")
+            elif (newEnemyHp <= 0):
+                print("Der " + str(enemyName) + " hat " + str(damage) + " Schaden bekommen. 0 HP übrig!")
+                print("")
+            return newEnemyHp
+            
             
         def mirrorImage(self):
             print("Fähigkeit Spiegelbild")
@@ -120,7 +128,7 @@ def dungeonAndDragons():
         elif (inputP1.lower() == "schurke"):
             p1Hp = random.randint(1,8) + 10
             p1Initiative = random.randint(1,10)
-            p1 = villain(p1Hp, p1Initiative, "Schurke")
+            p1 = villain(p1Hp, p1Initiative, "Schurke", 0)
             print("Schurke:")
             print("HP",p1.hp)
             print("Initiative",p1.initiative)
@@ -154,7 +162,7 @@ def dungeonAndDragons():
         elif (inputP2.lower() == "schurke"):
             p2Hp = random.randint(1,8) + 10
             p2Initiative = random.randint(1,10)
-            p2 = villain(p2Hp, p2Initiative, "Schurke")
+            p2 = villain(p2Hp, p2Initiative, "Schurke", 0)
             print("Schurke:")
             print("HP",p2.hp)
             print("Initiative",p2.initiative)
@@ -211,7 +219,8 @@ def dungeonAndDragons():
                         p1.fireball()
                         break
                     elif (input2P1 == 2):
-                        p1.magicMissile()
+                        returnValue = p1.magicMissile(p2.hp, p2.name)
+                        p2.hp = returnValue
                         break
                     elif (input2P1 == 3):
                         p1.mirrorImage()
@@ -271,7 +280,8 @@ def dungeonAndDragons():
                         p2.fireball()
                         break
                     elif (input2P2 == 2):
-                        p2.magicMissile()
+                        returnValue = p2.magicMissile(p1.hp, p1.name)
+                        p1.hp = returnValue
                         break
                     elif (input2P2 == 3):
                         p2.mirrorImage()
