@@ -37,8 +37,9 @@ def dungeonAndDragons():
 
     #Subklasse Krieger
     class knight(character):
-        def __init__(self, hp: int,initiative: int, name: str) -> None:
+        def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
             super().__init__(hp, initiative, name)
+            self.counterHealthpotions = counterHealthpotions
             
         def swordstrike(self, enemyHP, enemyName):
             damage = random.randint(1,7)
@@ -54,10 +55,17 @@ def dungeonAndDragons():
         def shieldblock(self):
             print("Fähigkeit Schildblock")
             print("")
-            
-        def healthpotionKnight(self):
-            print("Fähigkeit Heilung")
-            print("")
+        
+        def healthpotionKnight(self, hp, enemy):
+            heal = random.randint(1,6)
+            newHp = hp + heal
+            if (enemy.counterHealthpotions == 0):
+                print("Deine HP wurden um " + str(heal) + " HP auf insgesamt " + str(newHp) + " HP erhöht!")
+                print("")
+            elif (enemy.counterHealthpotions != 0):
+                print("Du hast die letzte Healthpotion aufgebraucht!")
+                print("")
+            return newHp
     
     #Subklasse Schurke
     class villain(character):
@@ -96,7 +104,7 @@ def dungeonAndDragons():
         elif (inputP1.lower() == "krieger"):
             p1Hp = random.randint(1,10) + 10
             p1Initiative = random.randint(1,8)
-            p1 = knight(p1Hp, p1Initiative, "Krieger")
+            p1 = knight(p1Hp, p1Initiative, "Krieger", 0)
             print("Krieger:")
             print("HP",p1.hp)
             print("Initiative",p1.initiative)
@@ -130,7 +138,7 @@ def dungeonAndDragons():
         elif (inputP2.lower() == "krieger"):
             p2Hp = random.randint(1,10) + 10
             p2Initiative = random.randint(1,8)
-            p2 = knight(p2Hp, p2Initiative, "Krieger")
+            p2 = knight(p2Hp, p2Initiative, "Krieger", 0)
             print("Krieger:")
             print("HP",p2.hp)
             print("Initiative",p2.initiative)
@@ -183,7 +191,9 @@ def dungeonAndDragons():
                         p1.shieldblock()
                         break
                     elif (input2P1 == 3):
-                        p1.healthpotionKnight()
+                        returnValue = p1.healthpotionKnight(p1.hp, p1)
+                        p1.hp = returnValue
+                        p1.counterHealthpotions = 1
                         break
                     else:
                         print(str(input2P1) + " ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
@@ -232,14 +242,16 @@ def dungeonAndDragons():
                     input2P2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
 
                     if (input2P2 == 1):
-                        p2.swordstrike(p1.hp, p1.name)
+                        returnValue = p2.swordstrike(p1.hp, p1.name)
                         p1.hp = returnValue
                         break
                     elif (input2P2 == 2):
                         p2.shieldblock()
                         break
                     elif (input2P2 == 3):
-                        p2.healthpotionKnight()
+                        returnValue = p2.healthpotionKnight(p2.hp, p2)
+                        p2.hp = returnValue
+                        p2.counterHealthpotions = 1
                         break
                     else:
                         print(str(input2P2) + " ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
