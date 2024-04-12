@@ -291,12 +291,6 @@ def dungeonAndDragons():
                         break
                     elif (input2P1 == 3):
                         p1.dirtInEye()
-                        if (tupel[1]):
-                            #Code hier
-                            pass
-                        else:
-                            #Code hier
-                            pass
                         break
                     elif (input2P1 == 4):
                         newHp = p1.healthpotionVillain(p1.hp, p1)
@@ -371,12 +365,6 @@ def dungeonAndDragons():
                         break
                     elif (input2P2 == 3):
                         p2.dirtInEye()
-                        if (tupel[1]):
-                            #Code hier
-                            pass
-                        else:
-                            #Code hier
-                            pass
                         break
                     elif (input2P2 == 4):
                         newHp = p2.healthpotionVillain(p2.hp, p2)
