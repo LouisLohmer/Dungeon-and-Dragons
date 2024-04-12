@@ -222,21 +222,22 @@ def dungeonAndDragons():
             p1NextMove = False
             p1FirstMove = False
             print(p1.name+", du bist am Zug!")
+            print("HP: " + str(p1.hp))
 
             while(True):
                 if (p1.name == "Krieger"):
                     input2P1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
 
                     if (input2P1 == 1):
-                        returnValue = p1.swordstrike(p2.hp, p2.name)
-                        p2.hp = returnValue
+                        newEnemyHp = p1.swordstrike(p2.hp, p2.name)
+                        p2.hp = newEnemyHp
                         break
                     elif (input2P1 == 2):
                         p1.shieldblock()
                         break
                     elif (input2P1 == 3):
-                        returnValue = p1.healthpotionKnight(p1.hp, p1)
-                        p1.hp = returnValue
+                        newHp = p1.healthpotionKnight(p1.hp, p1)
+                        p1.hp = newHp
                         p1.counterHealthpotions = 1
                         break
                     else:
@@ -245,21 +246,21 @@ def dungeonAndDragons():
                 elif (p1.name == "Magier"):
                     input2P1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
                     if (input2P1 == 1):
-                        returnValue = p1.fireball(p2.hp, p2.name, p1)
+                        newEnemyHp = p1.fireball(p2.hp, p2.name, p1)
                         if (p1.counterFireball % 2 != 0):
-                            p2.hp = returnValue
+                            p2.hp = newEnemyHp
                         p1.counterFireball += 1
                         break
                     elif (input2P1 == 2):
-                        returnValue = p1.magicMissile(p2.hp, p2.name)
-                        p2.hp = returnValue
+                        newEnemyHp = p1.magicMissile(p2.hp, p2.name)
+                        p2.hp = newEnemyHp
                         break
                     elif (input2P1 == 3):
                         p1.mirrorImage()
                         break
                     elif (input2P1 == 4):
-                        returnValue = p1.smallHealthpotion(p1.hp, p1)
-                        p1.hp = returnValue
+                        newHp = p1.smallHealthpotion(p1.hp, p1)
+                        p1.hp = newHp
                         p1.counterHealthpotions = 1
                         break
                     else:
@@ -271,15 +272,15 @@ def dungeonAndDragons():
                         p1.sneakAttack()
                         break
                     elif (input2P1 == 2):
-                        returnValue = p1.dagger(p2.hp, p2.name)
-                        p2.hp = returnValue
+                        newEnemyHp = p1.dagger(p2.hp, p2.name)
+                        p2.hp = newEnemyHp
                         break
                     elif (input2P1 == 3):
                         p1.dirtInEye()
                         break
                     elif (input2P1 == 4):
-                        returnValue = p1.healthpotionVillain(p1.hp, p1)
-                        p1.hp = returnValue
+                        newHp = p1.healthpotionVillain(p1.hp, p1)
+                        p1.hp = newHp
                         p1.counterHealthpotions = 1
                         break
                     else:
@@ -290,20 +291,22 @@ def dungeonAndDragons():
             p2NextMove = False
             p2FirstMove = False
             print(p2.name+",du bist am Zug!")
+            print("HP: " + str(p2.hp))
+
             while(True):
                 if (p2.name == "Krieger"):
                     input2P2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
 
                     if (input2P2 == 1):
-                        returnValue = p2.swordstrike(p1.hp, p1.name)
-                        p1.hp = returnValue
+                        newEnemyHp = p2.swordstrike(p1.hp, p1.name)
+                        p1.hp = newEnemyHp
                         break
                     elif (input2P2 == 2):
                         p2.shieldblock()
                         break
                     elif (input2P2 == 3):
-                        returnValue = p2.healthpotionKnight(p2.hp, p2)
-                        p2.hp = returnValue
+                        newHp = p2.healthpotionKnight(p2.hp, p2)
+                        p2.hp = newHp
                         p2.counterHealthpotions = 1
                         break
                     else:
@@ -312,21 +315,21 @@ def dungeonAndDragons():
                 elif (p2.name == "Magier"):
                     input2P2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
                     if (input2P2 == 1):
-                        returnValue = p2.fireball(p1.hp, p1.name, p2)
+                        newEnemyHp = p2.fireball(p1.hp, p1.name, p2)
                         if (p2.counterFireball % 2 != 0):
-                            p1.hp = returnValue
+                            p1.hp = newEnemyHp
                         p2.counterFireball += 1
                         break
                     elif (input2P2 == 2):
-                        returnValue = p2.magicMissile(p1.hp, p1.name)
-                        p1.hp = returnValue
+                        newEnemyHp = p2.magicMissile(p1.hp, p1.name)
+                        p1.hp = newEnemyHp
                         break
                     elif (input2P2 == 3):
                         p2.mirrorImage()
                         break
                     elif (input2P2 == 4):
-                        returnValue = p2.smallHealthpotion(p2.hp, p2)
-                        p2.hp = returnValue
+                        newHp = p2.smallHealthpotion(p2.hp, p2)
+                        p2.hp = newHp
                         p2.counterHealthpotions = 1
                         break
                     else:
@@ -338,15 +341,15 @@ def dungeonAndDragons():
                         p2.sneakAttack()
                         break
                     elif (input2P2 == 2):
-                        returnValue = p2.dagger(p1.hp, p1.name)
-                        p1.hp = returnValue
+                        newEnemyHp = p2.dagger(p1.hp, p1.name)
+                        p1.hp = newEnemyHp
                         break
                     elif (input2P2 == 3):
                         p2.dirtInEye()
                         break
                     elif (input2P2 == 4):
-                        returnValue = p2.healthpotionVillain(p2.hp, p2)
-                        p2.hp = returnValue
+                        newHp = p2.healthpotionVillain(p2.hp, p2)
+                        p2.hp = newHp
                         p2.counterHealthpotions = 1
                         break
                     else:
