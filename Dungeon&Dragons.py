@@ -358,9 +358,9 @@ def dungeonAndDragons():
         
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner,der " + p1.name + " ,ist gestorben!")
-            return
+            break
         elif (p2.hp <= 0):
             print("Der " + p1.name + " hat das Spiel gewonnen. Sein Gegner,der " + p2.name + " ,ist gestorben!")
-            return
+            break
 
 dungeonAndDragons()
