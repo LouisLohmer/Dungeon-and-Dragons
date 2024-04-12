@@ -91,9 +91,18 @@ def dungeonAndDragons():
             print("Fähigkeit Sneack-Attack")
             print("")
             
-        def dagger(self):
-            print("Fähigkeit Dolchangriff")
-            print("")
+        def dagger(self, enemyHP, enemyName):
+            damageFirstAttack = random.randint(1,4)
+            damageSecondAttack = random.randint(1,4)
+            newEnemyHp = enemyHP - (damageFirstAttack + damageSecondAttack)
+            if (newEnemyHp > 0):
+                print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                print("")
+            elif (newEnemyHp <= 0):
+                print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. 0 HP übrig!")
+                print("")
+            return newEnemyHp
+
             
         def dirtInEye(self):
             print("Fähigkeit Schmutz")
@@ -246,7 +255,8 @@ def dungeonAndDragons():
                         p1.sneakAttack()
                         break
                     elif (input2P1 == 2):
-                        p1.dagger()
+                        returnValue = p1.dagger(p2.hp, p2.name)
+                        p2.hp = returnValue
                         break
                     elif (input2P1 == 3):
                         p1.dirtInEye()
@@ -309,7 +319,8 @@ def dungeonAndDragons():
                         p2.sneakAttack()
                         break
                     elif (input2P2 == 2):
-                        p2.dagger()
+                        returnValue = p2.dagger(p1.hp, p1.name)
+                        p1.hp = returnValue
                         break
                     elif (input2P2 == 3):
                         p2.dirtInEye()
