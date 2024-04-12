@@ -9,15 +9,16 @@ def dungeonAndDragons():
     #Klassen für Spielcharactere erstellen
     #Vaterklasse Charakter
     class character:
-        def __init__(self, hp: int,initiative: int, name: str) -> None:
+        def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
             self.hp = hp
             self.initiative = initiative
             self.name = name
+            self.counterHealthpotions = counterHealthpotions
     
     #Subklasse Magier
     class mage(character):
-        def __init__(self, hp: int,initiative: int, name: str) -> None:
-            super().__init__(hp, initiative, name)
+        def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
+            super().__init__(hp, initiative, name, counterHealthpotions)
             
         def fireball(self):
             print("Fähigkeit Feuerball")
@@ -31,15 +32,21 @@ def dungeonAndDragons():
             print("Fähigkeit Spiegelbild")
             print("")
             
-        def smallHealthpotion(self):
-            print("Fähigkeit kleine Heilung")
-            print("")
+        def smallHealthpotion(self, hp, enemy):
+            heal = random.randint(1,4)
+            newHp = hp + heal
+            if (enemy.counterHealthpotions == 0):
+                print("Deine HP wurden um " + str(heal) + " HP auf insgesamt " + str(newHp) + " HP erhöht!")
+                print("")
+            elif (enemy.counterHealthpotions != 0):
+                print("Du hast die letzte Healthpotion aufgebraucht!")
+                print("")
+            return newHp
 
     #Subklasse Krieger
     class knight(character):
         def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
-            super().__init__(hp, initiative, name)
-            self.counterHealthpotions = counterHealthpotions
+            super().__init__(hp, initiative, name, counterHealthpotions)
             
         def swordstrike(self, enemyHP, enemyName):
             damage = random.randint(1,7)
@@ -69,8 +76,8 @@ def dungeonAndDragons():
     
     #Subklasse Schurke
     class villain(character):
-        def __init__(self, hp: int,initiative: int, name: str) -> None:
-            super().__init__(hp, initiative, name)
+        def __init__(self, hp: int,initiative: int, name: str, counterHealthpotions: int) -> None:
+            super().__init__(hp, initiative, name, counterHealthpotions)
             
         def sneakAttack(self):
             print("Fähigkeit Sneack-Attack")
@@ -95,7 +102,7 @@ def dungeonAndDragons():
         if (inputP1.lower() == "magier"):
             p1Hp = random.randint(1,6) + 10
             p1Initiative = random.randint(1,6)
-            p1 = mage(p1Hp, p1Initiative, "Magier")
+            p1 = mage(p1Hp, p1Initiative, "Magier", 0)
             print("Magier:")
             print("HP",p1.hp)
             print("Initiative",p1.initiative)
@@ -129,7 +136,7 @@ def dungeonAndDragons():
         if (inputP2.lower() == "magier"):
             p2Hp = random.randint(1,6) + 10
             p2Initiative = random.randint(1,6)
-            p2 = mage(p2Hp, p2Initiative, "Magier")
+            p2 = mage(p2Hp, p2Initiative, "Magier", 0)
             print("Magier:")
             print("HP",p2.hp)
             print("Initiative",p2.initiative)
@@ -210,7 +217,9 @@ def dungeonAndDragons():
                         p1.mirrorImage()
                         break
                     elif (input2P1 == 4):
-                        p1.smallHealthpotion()
+                        returnValue = p1.smallHealthpotion(p1.hp, p1)
+                        p1.hp = returnValue
+                        p1.counterHealthpotions = 1
                         break
                     else:
                         print(str(input2P1) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
@@ -268,7 +277,9 @@ def dungeonAndDragons():
                         p2.mirrorImage()
                         break
                     elif (input2P2 == 4):
-                        p2.smallHealthpotion()
+                        p2.smallHealthpotion(p2.hp, p2)
+                        p2.hp = returnValue
+                        p2.counterHealthpotions = 1
                         break
                     else:
                         print(str(input2P2) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
