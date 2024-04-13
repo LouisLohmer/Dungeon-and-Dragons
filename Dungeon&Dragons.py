@@ -26,6 +26,8 @@ def dungeonAndDragons():
             if (player.counterFireball % 2 == 0 or player.counterFireball == 0):
                 print("Der Feuerball lädt auf!")
                 print("")
+                newEnemyHp = enemyHp
+                return newEnemyHp
             elif (player.counterFireball % 2 != 0):
                 damageFirstAttack = random.randint(1,7)
                 damageSecondAttack = random.randint(1,7)
@@ -232,6 +234,7 @@ def dungeonAndDragons():
         p2FirstMove = True
     else:
         print("Die Initiativen beider Spieler sind gleich groß, das Spiel wird neu gestart!")
+        print("")
         dungeonAndDragons()
     
     #Kampf iterativ abspielen, bis einer der Spieler tot ist
@@ -289,9 +292,9 @@ def dungeonAndDragons():
                                     p2.hp = newEnemyHp
                                 else:
                                     p2.hp = newEnemyHp
-                            p1.counterFireball += 1
                         else:
                             p2.hp = newEnemyHp
+                        p1.counterFireball += 1
                         break
                     elif (inputMoveP1 == 2):
                         newEnemyHp = p1.magicMissile(p2.hp, p2.name)
@@ -400,9 +403,9 @@ def dungeonAndDragons():
                                     p1.hp = newEnemyHp
                                 else:
                                     p1.hp = newEnemyHp
-                            p2.counterFireball += 1
                         else:
                             p1.hp = newEnemyHp
+                        p2.counterFireball += 1
                         break
                     elif (inputMoveP2 == 2):
                         newEnemyHp = p2.magicMissile(p1.hp, p1.name)
