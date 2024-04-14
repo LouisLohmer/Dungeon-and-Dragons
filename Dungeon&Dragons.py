@@ -33,10 +33,10 @@ def dungeonAndDragons():
                 damageSecondAttack = random.randint(1,7)
                 newEnemyHp = enemyHp - (damageFirstAttack + damageSecondAttack)
                 if (newEnemyHp > 0):
-                    print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                    print("Der ",enemyName," hat ",(damageFirstAttack + damageSecondAttack)," Schaden bekommen. ",newEnemyHp," HP übrig!")
                     print("")
                 elif (newEnemyHp <= 0):
-                    print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. 0 HP übrig!")
+                    print("Der ",enemyName," hat ",(damageFirstAttack + damageSecondAttack)," Schaden bekommen. 0 HP übrig!")
                     print("")
                 return newEnemyHp
             
@@ -44,10 +44,10 @@ def dungeonAndDragons():
             damage = random.randint(1,6)
             newEnemyHp = enemyHp - damage
             if (newEnemyHp > 0):
-                print("Der " + str(enemyName) + " hat " + str(damage) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                print("Der ",enemyName," hat ",damage," Schaden bekommen. ",newEnemyHp," HP übrig!")
                 print("")
             elif (newEnemyHp <= 0):
-                print("Der " + str(enemyName) + " hat " + str(damage) + " Schaden bekommen. 0 HP übrig!")
+                print("Der ",enemyName," hat ",damage," Schaden bekommen. 0 HP übrig!")
                 print("")
             return newEnemyHp
             
@@ -67,7 +67,7 @@ def dungeonAndDragons():
         def smallHealthpotion(self, player):
             heal = random.randint(1,4)
             if (player.counterHealthpotions == 0):
-                print("Deine HP wurden um " + str(heal) + " HP erhöht!")
+                print("Deine HP wurden um ",heal," HP erhöht!")
                 print("")
                 return heal
             elif (player.counterHealthpotions != 0):
@@ -85,10 +85,10 @@ def dungeonAndDragons():
             damage = random.randint(1,7)
             newEnemyHp = enemyHP - damage
             if (newEnemyHp > 0):
-                print("Der " + str(enemyName) + " hat " + str(damage) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                print("Der ",enemyName," hat ",damage," Schaden bekommen. ",newEnemyHp," HP übrig!")
                 print("")
             elif (newEnemyHp <= 0):
-                print("Der " + str(enemyName) + " hat " + str(damage) + " Schaden bekommen. 0 HP übrig!")
+                print("Der ",enemyName," hat ",damage," Schaden bekommen. 0 HP übrig!")
                 print("")
             return newEnemyHp
             
@@ -99,7 +99,7 @@ def dungeonAndDragons():
         def healthpotionKnight(self, player):
             heal = random.randint(1,6)
             if (player.counterHealthpotions == 0):
-                print("Deine HP wurden um " + str(heal) + " HP erhöht!")
+                print("Deine HP wurden um ",heal," HP erhöht!")
                 print("")
                 return heal
             elif (player.counterHealthpotions != 0):
@@ -116,7 +116,7 @@ def dungeonAndDragons():
         def sneakAttack(self, firstMove):
             if (firstMove == True):
                 extraDamage = random.randint(1,3)
-                print("Dein nächster Angriff wird um " + str(extraDamage) + " Schaden erhöht!")
+                print("Dein nächster Angriff wird um ",extraDamage," Schaden erhöht!")
                 print("")
                 return (extraDamage, firstMove)
             else:
@@ -131,10 +131,10 @@ def dungeonAndDragons():
             damageSecondAttack = random.randint(1,4)
             newEnemyHp = enemyHP - (damageFirstAttack + damageSecondAttack)
             if (newEnemyHp > 0):
-                print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. " + str(newEnemyHp) + " HP übrig!")
+                print("Der ",enemyName," hat ",(damageFirstAttack + damageSecondAttack)," Schaden bekommen. ",newEnemyHp," HP übrig!")
                 print("")
             elif (newEnemyHp <= 0):
-                print("Der " + str(enemyName) + " hat " + str(damageFirstAttack + damageSecondAttack) + " Schaden bekommen. 0 HP übrig!")
+                print("Der ",enemyName," hat ",(damageFirstAttack + damageSecondAttack)," Schaden bekommen. 0 HP übrig!")
                 print("")
             return newEnemyHp
 
@@ -146,7 +146,7 @@ def dungeonAndDragons():
         def healthpotionVillain(self, player):
             heal = random.randint(1,6)
             if (player.counterHealthpotions == 0):
-                print("Deine HP wurden um " + str(heal) + " HP erhöht!")
+                print("Deine HP wurden um ",heal," HP erhöht!")
                 print("")
                 return heal
             elif (player.counterHealthpotions != 0):
@@ -247,7 +247,7 @@ def dungeonAndDragons():
             p2NextMove = True
             p1NextMove = False
             print(p1.name+", du bist am Zug!")
-            print("HP: " + str(p1.hp))
+            print("HP: ",p1.hp)
 
             while(True):
                 if (p1.name == "Krieger"):
@@ -274,7 +274,7 @@ def dungeonAndDragons():
                         p1.counterHealthpotions = 1
                         break
                     else:
-                        print(str(inputMoveP1) + " ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
+                        print(inputMoveP1," ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
                         continue
                 elif (p1.name == "Magier"):
                     inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
@@ -320,7 +320,7 @@ def dungeonAndDragons():
                         p1.counterHealthpotions = 1
                         break
                     else:
-                        print(str(inputMoveP1) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
+                        print(inputMoveP1," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
                 elif (p1.name == "Schurke"):
                     inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
@@ -331,7 +331,7 @@ def dungeonAndDragons():
                         newEnemyHp = p1.dagger(p2.hp, p2.name)
                         #Fähigkeit/Funktion sneakAttack
                         if (tupelVillain[1] and percentage < 0.5):
-                            print("Dein Gegner bekommt " + str(tupelVillain[0]) + " HP extra Schaden aufgrund der Sneak-Attack")
+                            print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
                             p2.hp = newEnemyHp - tupelVillain[0]
                         #Fähigkeit/Funktion Spiegelbild
@@ -351,14 +351,14 @@ def dungeonAndDragons():
                         p1.counterHealthpotions = 1
                         break
                     else:
-                        print(str(inputMoveP1) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
+                        print(inputMoveP1," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
             p1FirstMove = False
         elif (p2FirstMove == True or p2NextMove == True):
             p1NextMove = True
             p2NextMove = False
             print(p2.name+",du bist am Zug!")
-            print("HP: " + str(p2.hp))
+            print("HP: ",p2.hp)
 
             while(True):
                 if (p2.name == "Krieger"):
@@ -385,7 +385,7 @@ def dungeonAndDragons():
                         p2.counterHealthpotions = 1
                         break
                     else:
-                        print(str(inputMoveP2) + " ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
+                        print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
                         continue
                 elif (p2.name == "Magier"):
                     inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
@@ -432,7 +432,7 @@ def dungeonAndDragons():
                         p2.counterHealthpotions = 1
                         break
                     else:
-                        print(str(inputMoveP2) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
+                        print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
                 elif (p2.name == "Schurke"):
                     inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
@@ -443,7 +443,7 @@ def dungeonAndDragons():
                         newEnemyHp = p2.dagger(p1.hp, p1.name)
                         #Fähigkeit/Funktion sneakAttack
                         if (tupelVillain[1] and percentage < 0.5):
-                            print("Dein Gegner bekommt " + str(tupelVillain[0]) + " HP extra Schaden aufgrund der Sneak-Attack")
+                            print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
                             p1.hp = newEnemyHp - tupelVillain[0]
                         #Fähigkeit/Funktion Spiegelbild
@@ -463,7 +463,7 @@ def dungeonAndDragons():
                         p2.counterHealthpotions = 1
                         break
                     else:
-                        print(str(inputMoveP2) + " ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
+                        print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
             p2FirstMove = False
 
