@@ -170,10 +170,20 @@ def dungeonAndDragons():
                 print("")
             return newEnemyHp
 
-        #Fähigkeit Schmutz
-        def dirtInEye(self):
-            print("Fähigkeit Schmutz")
-            print("")
+        #Fähigkeit sc
+        def dirtInEye(self, enemy):
+            #Benötigte Prozentanzahl berechnen
+            percentage = random.random()
+            percentage = round(percentage, 2)
+            if(percentage < 0.5):
+                #Wenn der Schurke nicht trifft, wird keine Immunität gewährt
+                print("Der Schurke hat den",enemy,"nicht getroffen!")
+                print("")
+            elif(percentage >= 0.5):
+                #Wenn der Schurke trifft, wird der nächste Angriff blockiert
+                print("Der Schurke hat den",enemy,"exakt ins Auge getroffen! Der nächste Angriff verursacht keine Schaden.")
+                print("")
+            return percentage
         
         #Fähigkeit Healthpotion
         def healthpotionVillain(self, player):
@@ -284,6 +294,7 @@ def dungeonAndDragons():
     p2NextMove = False
     tupelVillain = (0, False)
     percentage = 0
+    percentageDirtInEye = 0
     damagereduction = 0
     while(True):
         if (p1FirstMove == True or p1NextMove == True):
@@ -314,7 +325,6 @@ def dungeonAndDragons():
                                 #Schaden vom Schwertschlag vom Gegner abziehen
                                 p2.hp = newEnemyHp
                         elif (percentage >= 0.5 and p2.counterAttack < 2):
-                            print("Spiegelbild")
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
                             print("")
@@ -324,6 +334,16 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p2.counterAttack = 0
                                 percentage = 0
+                        elif (percentageDirtInEye >= 0.5 and p2.counterAttack < 1):
+                            #Fähigkeit/Funktion Schmutz
+                            print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                            print("")
+                            #counterAttack pro Angriff um eins erhöhen
+                            p2.counterAttack += 1
+                            if (p2.counterAttack == 1):
+                                #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                p2.counterAttack = 0
+                                percentageDirtInEye = 0
                         else:
                             #Schaden vom Schwertschlag vom Gegner abziehen
                             p2.hp = newEnemyHp
@@ -373,6 +393,16 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p2.counterAttack = 0
                                 damagereduction = 0
+                        elif (percentageDirtInEye >= 0.5 and p2.counterAttack < 1 and p1.counterFireball % 2 != 0):
+                                    #Fähigkeit/Funktion Schmutz
+                                    print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                                    print("")
+                                    #counterAttack pro Angriff um eins erhöhen
+                                    p2.counterAttack += 1
+                                    if (p2.counterAttack == 1):
+                                        #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                        p2.counterAttack = 0
+                                        percentageDirtInEye = 0
                         else:
                             #Schaden vom Feuerball vom Gegner abziehen
                             p2.hp = newEnemyHp
@@ -406,6 +436,16 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p2.counterAttack = 0
                                 damagereduction = 0
+                        elif (percentageDirtInEye >= 0.5 and p2.counterAttack < 1):
+                                #Fähigkeit/Funktion Schmutz
+                                print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                                print("")
+                                #counterAttack pro Angriff um eins erhöhen
+                                p2.counterAttack += 1
+                                if (p2.counterAttack == 1):
+                                    #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                    p2.counterAttack = 0
+                                    percentageDirtInEye = 0
                         else:
                             #Schaden vom magic Missile vom Gegner abziehen
                             p2.hp = newEnemyHp
@@ -430,7 +470,22 @@ def dungeonAndDragons():
                         break
                     elif (inputMoveP1 == 2):
                         newEnemyHp = p1.dagger(p2.hp, p2.name)
-                        if (tupelVillain[1] and percentage < 0.5):
+                        if (p2.name == "Schurke" and p1.name == "Schurke"):
+                            if (percentageDirtInEye >= 0.5 and p2.counterAttack < 1):
+                                #Fähigkeit/Funktion Schmutz
+                                print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                                print("")
+                                #counterAttack pro Angriff um eins erhöhen
+                                p2.counterAttack += 1
+                                if (p2.counterAttack == 1 and p1.counterAttack == 1):
+                                    #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                    p2.counterAttack = 0
+                                    p1.counterAttack = 0
+                                    percentageDirtInEye = 0
+                            else:
+                                #Schaden vom Dolchangriff vom Gegner abziehen
+                                p2.hp = newEnemyHp
+                        elif (tupelVillain[1] and percentage < 0.5):
                             #Fähigkeit/Funktion sneakAttack
                             print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
@@ -474,7 +529,7 @@ def dungeonAndDragons():
                             p2.hp = newEnemyHp
                         break
                     elif (inputMoveP1 == 3):
-                        p1.dirtInEye()
+                        percentageDirtInEye = p1.dirtInEye(p2.name)
                         break
                     elif (inputMoveP1 == 4):
                         heal = p1.healthpotionVillain(p1)
@@ -515,7 +570,6 @@ def dungeonAndDragons():
                                 #Schaden vom Schwertschlag vom Gegner abziehen
                                 p1.hp = newEnemyHp
                         elif (percentage >= 0.5 and p1.counterAttack < 2):
-                            print("Spiegelbild")
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
                             print("")
@@ -525,6 +579,16 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p1.counterAttack = 0
                                 percentage = 0
+                        elif (percentageDirtInEye >= 0.5 and p1.counterAttack < 1):
+                            #Fähigkeit/Funktion Schmutz
+                            print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                            print("")
+                            #counterAttack pro Angriff um eins erhöhen
+                            p1.counterAttack += 1
+                            if (p1.counterAttack == 1):
+                                #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                p1.counterAttack = 0
+                                percentageDirtInEye = 0
                         else:
                             #Schaden vom Schwertschlag vom Gegner abziehen
                             p1.hp = newEnemyHp
@@ -544,7 +608,6 @@ def dungeonAndDragons():
                         continue
                 elif (p2.name == "Magier"):
                     inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
-                   
                     if (inputMoveP2 == 1):
                         newEnemyHp = p2.fireball(p1.hp, p1.name, p2)
                         if (p2.name == "Magier" and p1.name == "Magier"):
@@ -574,6 +637,16 @@ def dungeonAndDragons():
                                         #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                         p1.counterAttack = 0
                                         damagereduction = 0
+                        elif (percentageDirtInEye >= 0.5 and p1.counterAttack < 1 and p2.counterFireball % 2 != 0):
+                                    #Fähigkeit/Funktion Schmutz
+                                    print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                                    print("")
+                                    #counterAttack pro Angriff um eins erhöhen
+                                    p1.counterAttack += 1
+                                    if (p1.counterAttack == 1):
+                                        #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                        p1.counterAttack = 0
+                                        percentageDirtInEye = 0
                         else:
                             #Schaden vom Feuerball vom Gegner abziehen
                             p1.hp = newEnemyHp
@@ -607,6 +680,16 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p1.counterAttack = 0
                                 damagereduction = 0
+                        elif (percentageDirtInEye >= 0.5 and p1.counterAttack < 1):
+                                #Fähigkeit/Funktion Schmutz
+                                print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                                print("")
+                                #counterAttack pro Angriff um eins erhöhen
+                                p1.counterAttack += 1
+                                if (p1.counterAttack == 1):
+                                    #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                    p1.counterAttack = 0
+                                    percentageDirtInEye = 0
                         else:
                             #Schaden vom magic Missile vom Gegner abziehen
                             p1.hp = newEnemyHp
@@ -631,7 +714,22 @@ def dungeonAndDragons():
                         break
                     elif (inputMoveP2 == 2):
                         newEnemyHp = p2.dagger(p1.hp, p1.name)
-                        if (tupelVillain[1] and percentage < 0.5):
+                        if (p2.name == "Schurke" and p1.name == "Schurke"):
+                            if (percentageDirtInEye >= 0.5 and p1.counterAttack < 1):
+                                #Fähigkeit/Funktion Schmutz
+                                print("Angriff blockiert aufgrund vom Schmutz im Auge")
+                                print("")
+                                #counterAttack pro Angriff um eins erhöhen
+                                p1.counterAttack += 1
+                                if (p1.counterAttack == 1 and p2.counterAttack == 1):
+                                    #Variablen für nächsten Aufruf zurücksetzen, wenn erster Angriff abgewehrt wurde
+                                    p1.counterAttack = 0
+                                    p2.counterAttack = 0
+                                    percentageDirtInEye = 0
+                            else:
+                                #Schaden vom Dolchangriff vom Gegner abziehen
+                                p1.hp = newEnemyHp
+                        elif (tupelVillain[1] and percentage < 0.5):
                             #Fähigkeit/Funktion sneakAttack
                             print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
@@ -675,7 +773,7 @@ def dungeonAndDragons():
                             p1.hp = newEnemyHp
                         break
                     elif (inputMoveP2 == 3):
-                        p2.dirtInEye()
+                        percentageDirtInEye = p2.dirtInEye(p1.name)
                         break
                     elif (inputMoveP2 == 4):
                         heal = p2.healthpotionVillain(p2)
