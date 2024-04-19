@@ -292,7 +292,8 @@ def dungeonAndDragons():
     #Kampf iterativ abspielen, bis einer der Spieler tot ist
     p1NextMove = False
     p2NextMove = False
-    tupelVillain = (0, False)
+    tupelFirstVillain = (0, False)
+    tupelSecondVillain = (0, False)
     percentageMirrorImage = 0
     percentageDirtInEye = 0
     damagereduction = 0
@@ -466,7 +467,7 @@ def dungeonAndDragons():
                 elif (p1.name == "Schurke"):
                     inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
                     if (inputMoveP1 == 1):
-                        tupelVillain = p1.sneakAttack(p1FirstMove)
+                        tupelFirstVillain = p1.sneakAttack(p1FirstMove)
                         break
                     elif (inputMoveP1 == 2):
                         newEnemyHp = p1.dagger(p2.hp, p2.name)
@@ -482,19 +483,25 @@ def dungeonAndDragons():
                                     p2.counterAttack = 0
                                     p1.counterAttack = 0
                                     percentageDirtInEye = 0
+                            elif (tupelFirstVillain[1]):
+                                #Fähigkeit/Funktion sneakAttack
+                                print("Dein Gegner bekommt ",tupelFirstVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
+                                print("")
+                                #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
+                                p2.hp = newEnemyHp - tupelFirstVillain[0]
                             else:
                                 #Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp
-                        elif (tupelVillain[1] and percentageMirrorImage < 0.5):
+                        elif (tupelFirstVillain[1] and percentageMirrorImage < 0.5):
                             #Fähigkeit/Funktion sneakAttack
-                            print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
+                            print("Dein Gegner bekommt ",tupelFirstVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
                             if (damagereduction > 0 and p2.counterAttack < 1):
                                 #Fähigkeit/Funktion Schildblock
                                 print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
                                 print("")
                                 #Extra Schaden der Sneak-Attacke und Schadenreduktion vom Schildblock vom Gegner abziehen
-                                p2.hp = newEnemyHp - tupelVillain[0] + damagereduction
+                                p2.hp = newEnemyHp - tupelFirstVillain[0] + damagereduction
                                 p2.counterAttack += 1
                                 if (p2.counterAttack == 1):
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
@@ -502,7 +509,7 @@ def dungeonAndDragons():
                                     damagereduction = 0
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
-                                p2.hp = newEnemyHp - tupelVillain[0]
+                                p2.hp = newEnemyHp - tupelFirstVillain[0]
                         elif (percentageMirrorImage >= 0.5 and p2.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
@@ -710,7 +717,7 @@ def dungeonAndDragons():
                 elif (p2.name == "Schurke"):
                     inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
                     if (inputMoveP2 == 1):
-                        tupelVillain = p2.sneakAttack(p2FirstMove)
+                        tupelSecondVillain = p2.sneakAttack(p2FirstMove)
                         break
                     elif (inputMoveP2 == 2):
                         newEnemyHp = p2.dagger(p1.hp, p1.name)
@@ -726,19 +733,25 @@ def dungeonAndDragons():
                                     p1.counterAttack = 0
                                     p2.counterAttack = 0
                                     percentageDirtInEye = 0
+                            elif (tupelSecondVillain[1]):
+                                #Fähigkeit/Funktion sneakAttack
+                                print("Dein Gegner bekommt ",tupelSecondVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
+                                print("")
+                                #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
+                                p1.hp = newEnemyHp - tupelSecondVillain[0]
                             else:
                                 #Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp
-                        elif (tupelVillain[1] and percentageMirrorImage < 0.5):
+                        elif (tupelSecondVillain[1] and percentageMirrorImage < 0.5):
                             #Fähigkeit/Funktion sneakAttack
-                            print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
+                            print("Dein Gegner bekommt ",tupelSecondVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
                             if (damagereduction > 0 and p1.counterAttack < 1):
                                 #Fähigkeit/Funktion Schildblock
                                 print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
                                 print("")
                                 #Extra Schaden der Sneak-Attacke und Schadenreduktion vom Schildblock vom Gegner abziehen
-                                p1.hp = newEnemyHp - tupelVillain[0] + damagereduction
+                                p1.hp = newEnemyHp - tupelSecondVillain[0] + damagereduction
                                 p1.counterAttack += 1
                                 if (p1.counterAttack == 1):
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
@@ -746,7 +759,7 @@ def dungeonAndDragons():
                                     damagereduction = 0
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
-                                p1.hp = newEnemyHp - tupelVillain[0]
+                                p1.hp = newEnemyHp - tupelSecondVillain[0]
                         elif (percentageMirrorImage >= 0.5 and p1.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
