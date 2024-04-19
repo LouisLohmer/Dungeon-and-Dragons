@@ -62,17 +62,17 @@ def dungeonAndDragons():
         #Fähigkeit Spiegelbild
         def mirrorImage(self):
             #Benötigte Prozentanzahl berechnen
-            percentage = random.random()
-            percentage = round(percentage, 2)
-            if (percentage >= 0.5):
+            percentageMirrorImage = random.random()
+            percentageMirrorImage = round(percentageMirrorImage, 2)
+            if (percentageMirrorImage >= 0.5):
                 #Bei einer 50 prozentigen Chance Fähigkeit aktivieren
                 print("Der Magier bekommt für die nächsten zwei Angriffe keinen Schaden!")
                 print("")
-            elif (percentage < 0.5):
+            elif (percentageMirrorImage < 0.5):
                 #Unterhalb der 50 prozentigen Chance Fähigkeit nicht aktivieren
                 print("pech gehabt, deine Immunität wird nicht gewährt!")
                 print("")
-            return percentage
+            return percentageMirrorImage
         
         #Fähigkeit kleine Heilung
         def smallHealthpotion(self, player):
@@ -173,17 +173,17 @@ def dungeonAndDragons():
         #Fähigkeit sc
         def dirtInEye(self, enemy):
             #Benötigte Prozentanzahl berechnen
-            percentage = random.random()
-            percentage = round(percentage, 2)
-            if(percentage < 0.5):
+            percentageDirtInEye = random.random()
+            percentageDirtInEye = round(percentageDirtInEye, 2)
+            if(percentageDirtInEye < 0.5):
                 #Wenn der Schurke nicht trifft, wird keine Immunität gewährt
                 print("Der Schurke hat den",enemy,"nicht getroffen!")
                 print("")
-            elif(percentage >= 0.5):
+            elif(percentageDirtInEye >= 0.5):
                 #Wenn der Schurke trifft, wird der nächste Angriff blockiert
                 print("Der Schurke hat den",enemy,"exakt ins Auge getroffen! Der nächste Angriff verursacht keine Schaden.")
                 print("")
-            return percentage
+            return percentageDirtInEye
         
         #Fähigkeit Healthpotion
         def healthpotionVillain(self, player):
@@ -293,7 +293,7 @@ def dungeonAndDragons():
     p1NextMove = False
     p2NextMove = False
     tupelVillain = (0, False)
-    percentage = 0
+    percentageMirrorImage = 0
     percentageDirtInEye = 0
     damagereduction = 0
     while(True):
@@ -324,7 +324,7 @@ def dungeonAndDragons():
                             else:
                                 #Schaden vom Schwertschlag vom Gegner abziehen
                                 p2.hp = newEnemyHp
-                        elif (percentage >= 0.5 and p2.counterAttack < 2):
+                        elif (percentageMirrorImage >= 0.5 and p2.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
                             print("")
@@ -333,7 +333,7 @@ def dungeonAndDragons():
                             if (p2.counterAttack == 2):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p2.counterAttack = 0
-                                percentage = 0
+                                percentageMirrorImage = 0
                         elif (percentageDirtInEye >= 0.5 and p2.counterAttack < 1):
                             #Fähigkeit/Funktion Schmutz
                             print("Angriff blockiert aufgrund vom Schmutz im Auge")
@@ -369,7 +369,7 @@ def dungeonAndDragons():
                         if (p2.name == "Magier" and p1.name == "Magier"):
                             if (p1.counterFireball % 2 != 0):
                                 #Fähigkeit/Funktion Spiegelbild
-                                if (percentage >= 0.5 and p2.counterAttack < 2):
+                                if (percentageMirrorImage >= 0.5 and p2.counterAttack < 2):
                                     print("Angriff blockiert aufgrund von Spiegelbild")
                                     print("")
                                     #counterAttack pro Angriff um eins erhöhen
@@ -378,7 +378,7 @@ def dungeonAndDragons():
                                         #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                         p2.counterAttack = 0
                                         p1.counterAttack = 0
-                                        percentage = 0
+                                        percentageMirrorImage = 0
                                 else:
                                     #Schaden vom Feuerball vom Gegner abziehen
                                     p2.hp = newEnemyHp
@@ -411,7 +411,7 @@ def dungeonAndDragons():
                     elif (inputMoveP1 == 2):
                         newEnemyHp = p1.magicMissile(p2.hp, p2.name)
                         if (p2.name == "Magier" and p1.name == "Magier"):
-                            if (percentage >= 0.5 and p2.counterAttack < 2):
+                            if (percentageMirrorImage >= 0.5 and p2.counterAttack < 2):
                                 #Fähigkeit/Funktion Spiegelbild
                                 print("Angriff blockiert aufgrund von Spiegelbild")
                                 print("")
@@ -421,7 +421,7 @@ def dungeonAndDragons():
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                     p2.counterAttack = 0
                                     p1.counterAttack = 0
-                                    percentage = 0
+                                    percentageMirrorImage = 0
                             else:
                                 #Schaden vom magic Missile vom Gegner abziehen
                                 p2.hp = newEnemyHp
@@ -451,7 +451,7 @@ def dungeonAndDragons():
                             p2.hp = newEnemyHp
                         break
                     elif (inputMoveP1 == 3):
-                        percentage = p1.mirrorImage()
+                        percentageMirrorImage = p1.mirrorImage()
                         break
                     elif (inputMoveP1 == 4):
                         heal = p1.smallHealthpotion(p1)
@@ -485,7 +485,7 @@ def dungeonAndDragons():
                             else:
                                 #Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp
-                        elif (tupelVillain[1] and percentage < 0.5):
+                        elif (tupelVillain[1] and percentageMirrorImage < 0.5):
                             #Fähigkeit/Funktion sneakAttack
                             print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
@@ -503,7 +503,7 @@ def dungeonAndDragons():
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp - tupelVillain[0]
-                        elif (percentage >= 0.5 and p2.counterAttack < 2):
+                        elif (percentageMirrorImage >= 0.5 and p2.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
                             print("")
@@ -512,7 +512,7 @@ def dungeonAndDragons():
                             if (p2.counterAttack == 2):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p2.counterAttack = 0
-                                percentage = 0
+                                percentageMirrorImage = 0
                         elif (damagereduction > 0 and p2.counterAttack < 1):
                             #Fähigkeit/Funktion Schildblock
                             print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
@@ -569,7 +569,7 @@ def dungeonAndDragons():
                             else:
                                 #Schaden vom Schwertschlag vom Gegner abziehen
                                 p1.hp = newEnemyHp
-                        elif (percentage >= 0.5 and p1.counterAttack < 2):
+                        elif (percentageMirrorImage >= 0.5 and p1.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
                             print("")
@@ -578,7 +578,7 @@ def dungeonAndDragons():
                             if (p1.counterAttack == 2):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p1.counterAttack = 0
-                                percentage = 0
+                                percentageMirrorImage = 0
                         elif (percentageDirtInEye >= 0.5 and p1.counterAttack < 1):
                             #Fähigkeit/Funktion Schmutz
                             print("Angriff blockiert aufgrund vom Schmutz im Auge")
@@ -612,7 +612,7 @@ def dungeonAndDragons():
                         newEnemyHp = p2.fireball(p1.hp, p1.name, p2)
                         if (p2.name == "Magier" and p1.name == "Magier"):
                             if (p2.counterFireball % 2 != 0):
-                                if (percentage >= 0.5 and p1.counterAttack < 2):
+                                if (percentageMirrorImage >= 0.5 and p1.counterAttack < 2):
                                     #Fähigkeit/Funktion Spiegelbild
                                     print("Angriff blockiert aufgrund von Spiegelbild")
                                     print("")
@@ -622,7 +622,7 @@ def dungeonAndDragons():
                                         #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                         p2.counterAttack = 0
                                         p1.counterAttack = 0
-                                        percentage = 0
+                                        percentageMirrorImage = 0
                                 else:
                                     #Schaden vom Feuerball vom Gegner abziehen
                                     p1.hp = newEnemyHp
@@ -655,7 +655,7 @@ def dungeonAndDragons():
                     elif (inputMoveP2 == 2):
                         newEnemyHp = p2.magicMissile(p1.hp, p1.name)
                         if (p2.name == "Magier" and p1.name == "Magier"):
-                            if (percentage >= 0.5 and p1.counterAttack < 2):
+                            if (percentageMirrorImage >= 0.5 and p1.counterAttack < 2):
                                 #Fähigkeit/Funktion Spiegelbild
                                 print("Angriff blockiert aufgrund von Spiegelbild")
                                 print("")
@@ -665,7 +665,7 @@ def dungeonAndDragons():
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                     p2.counterAttack = 0
                                     p1.counterAttack = 0
-                                    percentage = 0
+                                    percentageMirrorImage = 0
                             else:
                                 #Schaden vom magic Missile vom Gegner abziehen
                                 p1.hp = newEnemyHp
@@ -695,7 +695,7 @@ def dungeonAndDragons():
                             p1.hp = newEnemyHp
                         break
                     elif (inputMoveP2 == 3):
-                        percentage = p2.mirrorImage()
+                        percentageMirrorImage = p2.mirrorImage()
                         break
                     elif (inputMoveP2 == 4):
                         heal = p2.smallHealthpotion(p2)
@@ -729,7 +729,7 @@ def dungeonAndDragons():
                             else:
                                 #Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp
-                        elif (tupelVillain[1] and percentage < 0.5):
+                        elif (tupelVillain[1] and percentageMirrorImage < 0.5):
                             #Fähigkeit/Funktion sneakAttack
                             print("Dein Gegner bekommt ",tupelVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
@@ -747,7 +747,7 @@ def dungeonAndDragons():
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp - tupelVillain[0]
-                        elif (percentage >= 0.5 and p1.counterAttack < 2):
+                        elif (percentageMirrorImage >= 0.5 and p1.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
                             print("")
@@ -756,7 +756,7 @@ def dungeonAndDragons():
                             if (p1.counterAttack == 2):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p1.counterAttack = 0
-                                percentage = 0
+                                percentageMirrorImage = 0
                         elif (damagereduction > 0 and p1.counterAttack < 1):
                             #Fähigkeit/Funktion Schildblock
                             print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
