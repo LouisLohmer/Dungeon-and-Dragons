@@ -114,7 +114,7 @@ def dungeonAndDragons():
             #1d4 Schadenreduktion berechnen
             damagereduction = random.randint(1,4)
             #Ergebniss ausgeben
-            print("Der nächste Angriff wir um ",damagereduction," Schadenspunkte reduziert!")
+            print("Der nächste gegnerische Angriff wird um ",damagereduction," Schadenspunkte reduziert!")
             print("")
             return damagereduction
 
@@ -290,13 +290,15 @@ def dungeonAndDragons():
         dungeonAndDragons()
     
     #Kampf iterativ abspielen, bis einer der Spieler tot ist
+    #Return-Values einen Defaultvalue zuteilen
     p1NextMove = False
     p2NextMove = False
     tupelFirstVillain = (0, False)
     tupelSecondVillain = (0, False)
     percentageMirrorImage = 0
     percentageDirtInEye = 0
-    damagereduction = 0
+    damagereductionFirstKnight = 0
+    damagereductionSecondKnight = 0
     while(True):
         if (p1FirstMove == True or p1NextMove == True):
             p2NextMove = True
@@ -306,22 +308,25 @@ def dungeonAndDragons():
 
             while(True):
                 if (p1.name == "Krieger"):
-                    inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
+                    inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl, gebe eine der angegebenen Zahlen hinter den Fähigkeiten an: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
+                    print("")
 
                     if (inputMoveP1 == 1):
                         newEnemyHp = p1.swordstrike(p2.hp, p2.name)
                         if (p1.name == "Krieger" and p2.name == "Krieger"):
-                            if (damagereduction > 0 and p2.counterAttack < 1):
+                            if (damagereductionSecondKnight > 0 and p2.counterAttack < 1):
                                 #Fähigkeit/Funktion Schildblock
-                                print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                                print("Die Attacke wurde um ",damagereductionSecondKnight," Schadenspunkte reduziert.")
                                 print("")
                                 #Schaden am Gegner reduzieren
-                                p2.hp = newEnemyHp + damagereduction
+                                p2.hp = newEnemyHp + damagereductionSecondKnight
                                 p2.counterAttack += 1
-                                if (p2.counterAttack == 1):
+                                if (p2.counterAttack == 1 and p1.counterAttack == 1):
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                     p2.counterAttack = 0
-                                    damagereduction = 0
+                                    p1.counterAttack = 0
+                                    damagereductionSecondKnight = 0
+                                    damagereductionFirstKnight = 0
                             else:
                                 #Schaden vom Schwertschlag vom Gegner abziehen
                                 p2.hp = newEnemyHp
@@ -350,7 +355,7 @@ def dungeonAndDragons():
                             p2.hp = newEnemyHp
                         break
                     elif (inputMoveP1 == 2):
-                        damagereduction = p1.shieldblock()
+                        damagereductionFirstKnight = p1.shieldblock()
                         break
                     elif (inputMoveP1 == 3):
                         heal = p1.healthpotionKnight(p1)
@@ -363,7 +368,8 @@ def dungeonAndDragons():
                         print(inputMoveP1," ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
                         continue
                 elif (p1.name == "Magier"):
-                    inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
+                    inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl, gebe eine der angegebenen Zahlen hinter den Fähigkeiten an: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
+                    print("")
                     
                     if (inputMoveP1 == 1):
                         newEnemyHp = p1.fireball(p2.hp, p2.name, p1)
@@ -383,17 +389,17 @@ def dungeonAndDragons():
                                 else:
                                     #Schaden vom Feuerball vom Gegner abziehen
                                     p2.hp = newEnemyHp
-                        elif (damagereduction > 0 and p2.counterAttack < 1 and p1.counterFireball % 2 != 0):
+                        elif (damagereductionSecondKnight > 0 and p2.counterAttack < 1 and p1.counterFireball % 2 != 0):
                             #Fähigkeit/Funktion Schildblock
-                            print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                            print("Die Attacke wurde um ",damagereductionSecondKnight," Schadenspunkte reduziert.")
                             print("")
                             #Schaden am Gegner reduzieren
-                            p2.hp = newEnemyHp + damagereduction
+                            p2.hp = newEnemyHp + damagereductionSecondKnight
                             p2.counterAttack += 1
                             if (p2.counterAttack == 1):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p2.counterAttack = 0
-                                damagereduction = 0
+                                damagereductionSecondKnight = 0
                         elif (percentageDirtInEye >= 0.5 and p2.counterAttack < 1 and p1.counterFireball % 2 != 0):
                                     #Fähigkeit/Funktion Schmutz
                                     print("Angriff blockiert aufgrund vom Schmutz im Auge")
@@ -426,17 +432,17 @@ def dungeonAndDragons():
                             else:
                                 #Schaden vom magic Missile vom Gegner abziehen
                                 p2.hp = newEnemyHp
-                        elif (damagereduction > 0 and p2.counterAttack < 1):
+                        elif (damagereductionSecondKnight > 0 and p2.counterAttack < 1):
                             #Fähigkeit/Funktion Schildblock
-                            print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                            print("Die Attacke wurde um ",damagereductionSecondKnight," Schadenspunkte reduziert.")
                             print("")
                             #Schaden am Gegner reduzieren
-                            p2.hp = newEnemyHp + damagereduction
+                            p2.hp = newEnemyHp + damagereductionSecondKnight
                             p2.counterAttack += 1
                             if (p2.counterAttack == 1):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p2.counterAttack = 0
-                                damagereduction = 0
+                                damagereductionSecondKnight = 0
                         elif (percentageDirtInEye >= 0.5 and p2.counterAttack < 1):
                                 #Fähigkeit/Funktion Schmutz
                                 print("Angriff blockiert aufgrund vom Schmutz im Auge")
@@ -465,7 +471,9 @@ def dungeonAndDragons():
                         print(inputMoveP1," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
                 elif (p1.name == "Schurke"):
-                    inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
+                    inputMoveP1 = int(input("Folgende Fähigkeiten stehen zur Auswahl, gebe eine der angegebenen Zahlen hinter den Fähigkeiten an: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
+                    print("")
+                    
                     if (inputMoveP1 == 1):
                         tupelFirstVillain = p1.sneakAttack(p1FirstMove)
                         break
@@ -496,17 +504,17 @@ def dungeonAndDragons():
                             #Fähigkeit/Funktion sneakAttack
                             print("Dein Gegner bekommt ",tupelFirstVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
-                            if (damagereduction > 0 and p2.counterAttack < 1):
+                            if (damagereductionSecondKnight > 0 and p2.counterAttack < 1):
                                 #Fähigkeit/Funktion Schildblock
-                                print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                                print("Die Attacke wurde um ",damagereductionSecondKnight," Schadenspunkte reduziert.")
                                 print("")
                                 #Extra Schaden der Sneak-Attacke und Schadenreduktion vom Schildblock vom Gegner abziehen
-                                p2.hp = newEnemyHp - tupelFirstVillain[0] + damagereduction
+                                p2.hp = newEnemyHp - tupelFirstVillain[0] + damagereductionSecondKnight
                                 p2.counterAttack += 1
                                 if (p2.counterAttack == 1):
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                     p2.counterAttack = 0
-                                    damagereduction = 0
+                                    damagereductionSecondKnight = 0
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp - tupelFirstVillain[0]
@@ -520,17 +528,17 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p2.counterAttack = 0
                                 percentageMirrorImage = 0
-                        elif (damagereduction > 0 and p2.counterAttack < 1):
+                        elif (damagereductionSecondKnight > 0 and p2.counterAttack < 1):
                             #Fähigkeit/Funktion Schildblock
-                            print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                            print("Die Attacke wurde um ",damagereductionSecondKnight," Schadenspunkte reduziert.")
                             print("")
                             #Schaden am Gegner reduzieren
-                            p2.hp = newEnemyHp + damagereduction
+                            p2.hp = newEnemyHp + damagereductionSecondKnight
                             p2.counterAttack += 1
                             if (p2.counterAttack == 1):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p2.counterAttack = 0
-                                damagereduction = 0
+                                damagereductionSecondKnight = 0
                         else:
                             #Schaden vom Dolchangriff vom Gegner abziehen
                             p2.hp = newEnemyHp
@@ -557,22 +565,25 @@ def dungeonAndDragons():
 
             while(True):
                 if (p2.name == "Krieger"):
-                    inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
+                    inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl, gebe eine der angegebenen Zahlen hinter den Fähigkeiten an: Schwertschlag (1), Schildblock (2), Healthpotion (3)"))
+                    print("")
 
                     if (inputMoveP2 == 1):
                         newEnemyHp = p2.swordstrike(p1.hp, p1.name)
                         if (p1.name == "Krieger" and p2.name == "Krieger"):
-                            if (damagereduction > 0 and p1.counterAttack < 1):
+                            if (damagereductionFirstKnight > 0 and p1.counterAttack < 1):
                                 #Fähigkeit/Funktion Schildblock
-                                print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                                print("Die Attacke wurde um ",damagereductionFirstKnight," Schadenspunkte reduziert.")
                                 print("")
                                 #Schaden am Gegner reduzieren
-                                p1.hp = newEnemyHp + damagereduction
+                                p1.hp = newEnemyHp + damagereductionFirstKnight
                                 p1.counterAttack += 1
-                                if (p1.counterAttack == 1):
+                                if (p1.counterAttack == 1 and p2.counterAttack == 1):
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                     p1.counterAttack = 0
-                                    damagereduction = 0
+                                    p2.counterAttack = 0
+                                    damagereductionFirstKnight = 0
+                                    damagereductionSecondKnight = 0
                             else:
                                 #Schaden vom Schwertschlag vom Gegner abziehen
                                 p1.hp = newEnemyHp
@@ -601,7 +612,7 @@ def dungeonAndDragons():
                             p1.hp = newEnemyHp
                         break
                     elif (inputMoveP2 == 2):
-                        damagereduction = p2.shieldblock()
+                        damagereductionSecondKnight = p2.shieldblock()
                         break
                     elif (inputMoveP2 == 3):
                         heal = p2.healthpotionKnight(p2)
@@ -614,7 +625,9 @@ def dungeonAndDragons():
                         print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2 oder 3!")
                         continue
                 elif (p2.name == "Magier"):
-                    inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
+                    inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl, gebe eine der angegebenen Zahlen hinter den Fähigkeiten an: Feuerball (1), Magic Missile (2), Spiegelbilder (3), kleine Heilung (4)"))
+                    print("")
+
                     if (inputMoveP2 == 1):
                         newEnemyHp = p2.fireball(p1.hp, p1.name, p2)
                         if (p2.name == "Magier" and p1.name == "Magier"):
@@ -633,17 +646,17 @@ def dungeonAndDragons():
                                 else:
                                     #Schaden vom Feuerball vom Gegner abziehen
                                     p1.hp = newEnemyHp
-                        elif (damagereduction > 0 and p1.counterAttack < 1 and p2.counterFireball % 2 != 0):
+                        elif (damagereductionFirstKnight > 0 and p1.counterAttack < 1 and p2.counterFireball % 2 != 0):
                                     #Fähigkeit/Funktion Schildblock
-                                    print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                                    print("Die Attacke wurde um ",damagereductionFirstKnight," Schadenspunkte reduziert.")
                                     print("")
                                     #Schaden am Gegner reduzieren
-                                    p1.hp = newEnemyHp + damagereduction
+                                    p1.hp = newEnemyHp + damagereductionFirstKnight
                                     p1.counterAttack += 1
                                     if (p1.counterAttack == 1):
                                         #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                         p1.counterAttack = 0
-                                        damagereduction = 0
+                                        damagereductionFirstKnight = 0
                         elif (percentageDirtInEye >= 0.5 and p1.counterAttack < 1 and p2.counterFireball % 2 != 0):
                                     #Fähigkeit/Funktion Schmutz
                                     print("Angriff blockiert aufgrund vom Schmutz im Auge")
@@ -676,17 +689,17 @@ def dungeonAndDragons():
                             else:
                                 #Schaden vom magic Missile vom Gegner abziehen
                                 p1.hp = newEnemyHp
-                        elif (damagereduction > 0 and p1.counterAttack < 1):
+                        elif (damagereductionFirstKnight > 0 and p1.counterAttack < 1):
                             #Fähigkeit/Funktion Schildblock
-                            print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                            print("Die Attacke wurde um ",damagereductionFirstKnight," Schadenspunkte reduziert.")
                             print("")
                             #Schaden am Gegner reduzieren
-                            p1.hp = newEnemyHp + damagereduction
+                            p1.hp = newEnemyHp + damagereductionFirstKnight
                             p1.counterAttack += 1
                             if (p1.counterAttack == 1):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p1.counterAttack = 0
-                                damagereduction = 0
+                                damagereductionFirstKnight = 0
                         elif (percentageDirtInEye >= 0.5 and p1.counterAttack < 1):
                                 #Fähigkeit/Funktion Schmutz
                                 print("Angriff blockiert aufgrund vom Schmutz im Auge")
@@ -715,7 +728,9 @@ def dungeonAndDragons():
                         print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
                 elif (p2.name == "Schurke"):
-                    inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
+                    inputMoveP2 = int(input("Folgende Fähigkeiten stehen zur Auswahl, gebe eine der angegebenen Zahlen hinter den Fähigkeiten an: Sneak-Attack (1), Dolchangriff (2), Schmutz (3), Healthpotion (4)"))
+                    print("")
+
                     if (inputMoveP2 == 1):
                         tupelSecondVillain = p2.sneakAttack(p2FirstMove)
                         break
@@ -746,17 +761,17 @@ def dungeonAndDragons():
                             #Fähigkeit/Funktion sneakAttack
                             print("Dein Gegner bekommt ",tupelSecondVillain[0]," HP extra Schaden aufgrund der Sneak-Attack")
                             print("")
-                            if (damagereduction > 0 and p1.counterAttack < 1):
+                            if (damagereductionFirstKnight > 0 and p1.counterAttack < 1):
                                 #Fähigkeit/Funktion Schildblock
-                                print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                                print("Die Attacke wurde um ",damagereductionFirstKnight," Schadenspunkte reduziert.")
                                 print("")
                                 #Extra Schaden der Sneak-Attacke und Schadenreduktion vom Schildblock vom Gegner abziehen
-                                p1.hp = newEnemyHp - tupelSecondVillain[0] + damagereduction
+                                p1.hp = newEnemyHp - tupelSecondVillain[0] + damagereductionFirstKnight
                                 p1.counterAttack += 1
                                 if (p1.counterAttack == 1):
                                     #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                     p1.counterAttack = 0
-                                    damagereduction = 0
+                                    damagereductionFirstKnight = 0
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp - tupelSecondVillain[0]
@@ -770,17 +785,17 @@ def dungeonAndDragons():
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn zweiter Angriff abgewehrt wurde
                                 p1.counterAttack = 0
                                 percentageMirrorImage = 0
-                        elif (damagereduction > 0 and p1.counterAttack < 1):
+                        elif (damagereductionFirstKnight > 0 and p1.counterAttack < 1):
                             #Fähigkeit/Funktion Schildblock
-                            print("Die Attacke wurde um ",damagereduction," Schadenspunkte reduziert.")
+                            print("Die Attacke wurde um ",damagereductionFirstKnight," Schadenspunkte reduziert.")
                             print("")
                             #Schaden am Gegner reduzieren
-                            p1.hp = newEnemyHp + damagereduction
+                            p1.hp = newEnemyHp + damagereductionFirstKnight
                             p1.counterAttack += 1
                             if (p1.counterAttack == 1):
                                 #Variablen für nächsten Aufruf zurücksetzen, wenn erste Angriff abgewehrt wurde
                                 p1.counterAttack = 0
-                                damagereduction = 0
+                                damagereductionFirstKnight = 0
                         else:
                             #Schaden vom Dolchangriff vom Gegner abziehen
                             p1.hp = newEnemyHp
@@ -799,7 +814,7 @@ def dungeonAndDragons():
                         print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
             p2FirstMove = False
-        #Tot der Spieler überprüfen
+        #Tot der Spieler überprüfen und Programm beenden
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner, der " + p1.name + " ,ist gestorben!")
             break
