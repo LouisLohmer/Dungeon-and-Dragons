@@ -1,7 +1,7 @@
 # Dungeon&Dragons
 
 ## About the Project
-This **Python-project** is a selfmade Dungeon&Dragons-program, which can be ran in your **IDE-Console**. Keep in Mind that the console-messages are written in **german**, since i'am a german developer.
+This **Python-project** is a selfmade Dungeon&Dragons-program, which can be ran in your **IDE-Console**. Keep in mind that the console-messages and comments in the code are written in **german**, since i'am a german developer.
 
 It works with the simplified but usual D&D-Rules, therefor each player (2 Players only) can choose at first between the characters knight, mage and villain. Then each character get the necessary stats, for example HP and initiative, and the character with the higher initiative gets the first move. After that it's at fight until death with alternate turns, of course there will be message in the console on which character died and which character won.
 
