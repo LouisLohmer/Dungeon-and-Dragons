@@ -170,7 +170,7 @@ def dungeonAndDragons():
                 print("")
             return newEnemyHp
 
-        #Fähigkeit sc
+        #Fähigkeit schmutz
         def dirtInEye(self, enemy):
             #Benötigte Prozentanzahl berechnen
             percentageDirtInEye = random.random()
@@ -497,6 +497,7 @@ def dungeonAndDragons():
                                 print("")
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp - tupelFirstVillain[0]
+                                tupelFirstVillain = (0, False)
                             else:
                                 #Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp
@@ -518,6 +519,7 @@ def dungeonAndDragons():
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p2.hp = newEnemyHp - tupelFirstVillain[0]
+                                tupelFirstVillain = (0, False)
                         elif (percentageMirrorImage >= 0.5 and p2.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
@@ -556,6 +558,7 @@ def dungeonAndDragons():
                     else:
                         print(inputMoveP1," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
+
             p1FirstMove = False
         elif (p2FirstMove == True or p2NextMove == True):
             p1NextMove = True
@@ -754,6 +757,7 @@ def dungeonAndDragons():
                                 print("")
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp - tupelSecondVillain[0]
+                                tupelSecondVillain = (0, False)
                             else:
                                 #Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp
@@ -775,6 +779,7 @@ def dungeonAndDragons():
                             else:
                                 #Extra Schaden der Sneak-Attacke und Schaden vom Dolchangriff vom Gegner abziehen
                                 p1.hp = newEnemyHp - tupelSecondVillain[0]
+                                tupelSecondVillain = (0, False)
                         elif (percentageMirrorImage >= 0.5 and p1.counterAttack < 2):
                             #Fähigkeit/Funktion Spiegelbild
                             print("Angriff blockiert aufgrund von Spiegelbild")
@@ -813,7 +818,8 @@ def dungeonAndDragons():
                     else:
                         print(inputMoveP2," ist keine existierende Fähigkeit, versuche es mit 1,2,3 oder 4!")
                         continue
-            p2FirstMove = False
+
+        p2FirstMove = False
         #Tot der Spieler überprüfen und Programm beenden
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner, der " + p1.name + " ,ist gestorben!")
