@@ -10,5 +10,5 @@ If your are **currently able to run Python files in your IDE, these steps wont b
 1. Download the latest version of Python (https://www.python.org/downloads/)
 2. Download an IDE for your System (Windows, MAC, Linux), i personally use VSCode (https://code.visualstudio.com/download)
 3. Install the Python-extension in your IDE to be able to actually run files in it. In VSCode just click on the Extensions-Button on the left drop-down-Menu, search "Python" and click on install.
-   ![image](https://github.com/LouisLohmer/Dungeon-and-Dragons/assets/126259607/159005b2-f12b-4267-b384-0fc8e6a12bb7)
+   ![image](https://github.com/LouisLohmer/Dungeon-and-Dragons/assets/126259607/159005b2-f12b-4267-b384-0fc8e6a12bb7 width="70%" height="70%")
 
