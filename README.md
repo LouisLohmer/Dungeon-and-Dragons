@@ -13,3 +13,12 @@ If your are **currently able to run Python files in your IDE, these steps wont b
 <div align="center">
  <img src="https://github.com/LouisLohmer/Dungeon-and-Dragons/assets/126259607/159005b2-f12b-4267-b384-0fc8e6a12bb7" width="70%" height="70%" />
 </div>
+
+## Run a python file in your IDE console
+**If Python is installed correctly**, you should be able to run any python file. Each python file is labeled with **.py** at the end and the **python logo is displayed next to the file name**.
+1. Open the specific python file you want to run, in our case it's Dungeon&Dragons.py
+2. Klick on the run-icon of your IDE, in VSCode you can find it in the top right corner of the window (In the image below it's marked with a white border around it)
+<div align="center">
+ <img src="https://github.com/user-attachments/assets/2b3ab380-9bee-4725-9f56-5387cbe29751" width="85%" height="85%" />
+
+</div>
