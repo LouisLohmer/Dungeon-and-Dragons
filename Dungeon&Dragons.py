@@ -1,4 +1,5 @@
 import random
+import datetime as dt
 
 def dungeonAndDragons():
     #Nutzer zu Beginn begrüßen
@@ -823,9 +824,14 @@ def dungeonAndDragons():
         #Tot der Spieler überprüfen und Programm beenden
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner, der " + p1.name + " ,ist gestorben!")
-            break
         elif (p2.hp <= 0):
             print("Der " + p1.name + " hat das Spiel gewonnen. Sein Gegner, der " + p2.name + " ,ist gestorben!")
+
+        #Ergebniss des Spiels in einer .csv-Datei speichern, wenn das Spiel zu ende ist
+        if (p1.hp <= 0 or p2.hp <= 0):
+            neuesErgebnis = open("gameresults.csv","a")
+            neuesErgebnis.write("Ergebniss des Spiels vom " + str(dt.datetime.now()) + ": " + str(p1.name) + " | " + str(p1.hp) + " HP" + " | " + str(p1.initiative) + " Initiative" +" - " + str(p2.name) + " | " + str(p2.hp) + " HP" + " | " + str(p2.initiative) + " Initiative" + f"\n")
+            neuesErgebnis.close()
             break
 
 dungeonAndDragons()
