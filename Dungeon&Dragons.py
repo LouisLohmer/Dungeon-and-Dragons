@@ -842,9 +842,9 @@ def documentNewGameResult(gamewinner, nameGamewinner, hpGamewinner, initativeGam
     newGameResult = open("gameresults.csv","a")
 
     if (gamewinner == "p1"):
-        newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der erste Spieler als " + str(nameGamewinner) + " mit " + str(hpGamewinner) + " HP und " + str(initativeGamewinner) + " Initiative, Verlierer ist der zweite Spieler als " + str(nameGameloser) + " mit " + str(hpgameloser) + " HP und " + str(initativeGameloser) + " Initiative." + f"\n")
+        newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ", Sieger ist der erste Spieler als " + str(nameGamewinner) + " mit " + str(hpGamewinner) + " HP und " + str(initativeGamewinner) + " Initiative, Verlierer ist der zweite Spieler als " + str(nameGameloser) + " mit " + str(hpgameloser) + " HP und " + str(initativeGameloser) + " Initiative." + f"\n")
     elif (gamewinner == "p2"):
-        newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der zweite Spieler als " + str(nameGamewinner) + " mit " + str(hpGamewinner) + " HP und " + str(initativeGamewinner) + " Initiative, Verlierer ist der erste Spieler als " + str(nameGameloser) + " mit " + str(hpgameloser) + " HP und " + str(initativeGameloser) + " Initiative." + f"\n")
+        newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ", Sieger ist der zweite Spieler als " + str(nameGamewinner) + " mit " + str(hpGamewinner) + " HP und " + str(initativeGamewinner) + " Initiative, Verlierer ist der erste Spieler als " + str(nameGameloser) + " mit " + str(hpgameloser) + " HP und " + str(initativeGameloser) + " Initiative." + f"\n")
 
     newGameResult.close()
 
