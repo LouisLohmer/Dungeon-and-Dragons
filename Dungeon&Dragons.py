@@ -1,5 +1,5 @@
 import random
-import datetime as dt
+from datetime import *
 
 def dungeonAndDragons():
     #Nutzer zu Beginn begrüßen
@@ -821,24 +821,25 @@ def dungeonAndDragons():
                         continue
 
         p2FirstMove = False
+        dateTime = datetime.today()
+        currentDate = str(dateTime).split(" ")[0]
+        currenTime = str(dateTime).split(" ")[1]
         #Tot der Spieler überprüfen und Programm beenden
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner, der " + p1.name + ",ist gestorben!")
             p1.hp = 0
-            print(p1.hp)
             #Ergebniss des Spiels in einer .csv-Datei speichern, wenn das Spiel zu ende ist
-            neuesErgebnis = open("gameresults.csv","a")
-            neuesErgebnis.write("Ergebniss des Spiels vom " + str(dt.datetime.now()) + ": " + str(p1.name) + " | " + str(p1.hp) + " HP" + " | " + str(p1.initiative) + " Initiative" +" - " + str(p2.name) + " | " + str(p2.hp) + " HP" + " | " + str(p2.initiative) + " Initiative" + f"\n")
-            neuesErgebnis.close()
+            newGameResult = open("gameresults.csv","a")
+            newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der zweite Spieler als " + str(p2.name) + " mit " + str(p2.hp) + " HP und " + str(p2.initiative) + " Initiative, Verlierer ist der erste Spieler als " + str(p1.name) + " mit " + str(p1.hp) + " HP und " + str(p1.initiative) + " Initiative." + f"\n")
+            newGameResult.close()
             break
         elif (p2.hp <= 0):
             print("Der " + p1.name + " hat das Spiel gewonnen. Sein Gegner, der " + p2.name + ",ist gestorben!")
             p2.hp = 0
-            print(p2.hp)
             #Ergebniss des Spiels in einer .csv-Datei speichern, wenn das Spiel zu ende ist
-            neuesErgebnis = open("gameresults.csv","a")
-            neuesErgebnis.write("Ergebniss des Spiels vom " + str(dt.datetime.now()) + ": " + str(p1.name) + " | " + str(p1.hp) + " HP" + " | " + str(p1.initiative) + " Initiative" +" - " + str(p2.name) + " | " + str(p2.hp) + " HP" + " | " + str(p2.initiative) + " Initiative" + f"\n")
-            neuesErgebnis.close()
+            newGameResult = open("gameresults.csv","a")
+            newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der erste Spieler als " + str(p1.name) + " mit " + str(p1.hp) + " HP und " + str(p1.initiative) + " Initiative, Verlierer ist der zweite Spieler als " + str(p2.name) + " mit " + str(p2.hp) + " HP und " + str(p2.initiative) + " Initiative." + f"\n")
+            newGameResult.close()
             break
 
 dungeonAndDragons()
