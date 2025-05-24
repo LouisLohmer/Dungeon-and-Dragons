@@ -821,25 +821,31 @@ def dungeonAndDragons():
                         continue
 
         p2FirstMove = False
-        dateTime = datetime.today()
-        currentDate = str(dateTime).split(" ")[0]
-        currenTime = str(dateTime).split(" ")[1]
         #Tot der Spieler überprüfen und Programm beenden
         if (p1.hp <= 0):
             print("Der " + p2.name + " hat das Spiel gewonnen. Sein Gegner, der " + p1.name + ",ist gestorben!")
             p1.hp = 0
-            #Ergebniss des Spiels in einer .csv-Datei speichern, wenn das Spiel zu ende ist
-            newGameResult = open("gameresults.csv","a")
-            newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der zweite Spieler als " + str(p2.name) + " mit " + str(p2.hp) + " HP und " + str(p2.initiative) + " Initiative, Verlierer ist der erste Spieler als " + str(p1.name) + " mit " + str(p1.hp) + " HP und " + str(p1.initiative) + " Initiative." + f"\n")
-            newGameResult.close()
+            documentNewGameResult("p2",p2.name,p2.hp,p2.initiative,p1.name,p1.hp,p1.initiative)
             break
         elif (p2.hp <= 0):
             print("Der " + p1.name + " hat das Spiel gewonnen. Sein Gegner, der " + p2.name + ",ist gestorben!")
             p2.hp = 0
-            #Ergebniss des Spiels in einer .csv-Datei speichern, wenn das Spiel zu ende ist
-            newGameResult = open("gameresults.csv","a")
-            newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der erste Spieler als " + str(p1.name) + " mit " + str(p1.hp) + " HP und " + str(p1.initiative) + " Initiative, Verlierer ist der zweite Spieler als " + str(p2.name) + " mit " + str(p2.hp) + " HP und " + str(p2.initiative) + " Initiative." + f"\n")
-            newGameResult.close()
+            documentNewGameResult("p1",p1.name,p1.hp,p1.initiative,p2.name,p2.hp,p2.initiative)
             break
+
+def documentNewGameResult(gamewinner, nameGamewinner, hpGamewinner, initativeGamewinner, nameGameloser, hpgameloser, initativeGameloser):
+    dateTime = datetime.today()
+    currentDate = str(dateTime).split(" ")[0]
+    currenTime = str(dateTime).split(" ")[1]
+
+    #Ergebniss des Spiels in einer .csv-Datei speichern, wenn das Spiel zu ende ist
+    newGameResult = open("gameresults.csv","a")
+
+    if (gamewinner == "p1"):
+        newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der erste Spieler als " + str(nameGamewinner) + " mit " + str(hpGamewinner) + " HP und " + str(initativeGamewinner) + " Initiative, Verlierer ist der zweite Spieler als " + str(nameGameloser) + " mit " + str(hpgameloser) + " HP und " + str(initativeGameloser) + " Initiative." + f"\n")
+    elif (gamewinner == "p2"):
+        newGameResult.write("Spielergebnis vom " + str(currentDate) + " um " + str(currenTime) + ": Sieger ist der zweite Spieler als " + str(nameGamewinner) + " mit " + str(hpGamewinner) + " HP und " + str(initativeGamewinner) + " Initiative, Verlierer ist der erste Spieler als " + str(nameGameloser) + " mit " + str(hpgameloser) + " HP und " + str(initativeGameloser) + " Initiative." + f"\n")
+
+    newGameResult.close()
 
 dungeonAndDragons()
